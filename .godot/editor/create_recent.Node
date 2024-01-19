@@ -1,0 +1,14 @@
+Panel
+VBoxContainer
+MeshInstance3D
+Node3D
+RigidBody3D
+CollisionPolygon3D
+StaticBody3D
+CollisionShape3D
+ColorPicker
+ColorRect
+Button
+Control
+Camera3D
+SubViewport

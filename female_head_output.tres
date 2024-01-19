@@ -1,0 +1,4 @@
+[gd_resource type="ViewportTexture" format=3 uid="uid://keptnk81ug78"]
+
+[resource]
+viewport_path = NodePath("display_female_head")

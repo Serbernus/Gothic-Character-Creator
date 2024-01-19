@@ -1,0 +1,112 @@
+[gd_scene load_steps=7 format=3 uid="uid://bu03w6qjlyh2y"]
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_lnlty"]
+parameter_name = "image"
+texture_type = 1
+
+[sub_resource type="VisualShaderNodeColorFunc" id="VisualShaderNodeColorFunc_7regm"]
+
+[sub_resource type="VisualShaderNodeVectorDecompose" id="VisualShaderNodeVectorDecompose_64slc"]
+default_input_values = [0, Quaternion(0, 0, 0, 0)]
+op_type = 2
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_toiut"]
+source = 5
+texture_type = 1
+
+[sub_resource type="VisualShader" id="VisualShader_qqp4r"]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+uniform sampler2D image : source_color;
+
+
+
+void fragment() {
+	vec4 n_out5p0;
+// Texture2D:5
+	n_out5p0 = texture(image, UV);
+
+
+	vec3 n_out3p0;
+// ColorFunc:3
+	{
+		vec3 c = vec3(n_out5p0.xyz);
+		float max1 = max(c.r, c.g);
+		float max2 = max(max1, c.b);
+		n_out3p0 = vec3(max2, max2, max2);
+	}
+
+
+// VectorDecompose:4
+	float n_out4p0 = n_out5p0.x;
+	float n_out4p1 = n_out5p0.y;
+	float n_out4p2 = n_out5p0.z;
+	float n_out4p3 = n_out5p0.w;
+
+
+// Output:0
+	COLOR.rgb = n_out3p0;
+	COLOR.a = n_out4p3;
+
+
+}
+"
+graph_offset = Vector2(-1093.24, -270.647)
+mode = 1
+flags/light_only = false
+nodes/fragment/2/node = SubResource("VisualShaderNodeTexture2DParameter_lnlty")
+nodes/fragment/2/position = Vector2(-460, 100)
+nodes/fragment/3/node = SubResource("VisualShaderNodeColorFunc_7regm")
+nodes/fragment/3/position = Vector2(160, 140)
+nodes/fragment/4/node = SubResource("VisualShaderNodeVectorDecompose_64slc")
+nodes/fragment/4/position = Vector2(180, 220)
+nodes/fragment/5/node = SubResource("VisualShaderNodeTexture_toiut")
+nodes/fragment/5/position = Vector2(-120, 100)
+nodes/fragment/connections = PackedInt32Array(2, 0, 5, 2, 5, 0, 3, 0, 5, 0, 4, 0, 3, 0, 0, 0, 4, 3, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3351u"]
+shader = SubResource("VisualShader_qqp4r")
+
+[node name="assets_option_content" type="Button"]
+custom_minimum_size = Vector2(160, 256)
+offset_right = 8.0
+offset_bottom = 64.0
+focus_mode = 0
+
+[node name="aspect" type="AspectRatioContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 20.0
+offset_right = -10.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 2.0
+
+[node name="display" type="Panel" parent="aspect"]
+material = SubResource("ShaderMaterial_3351u")
+layout_mode = 2
+mouse_filter = 2
+
+[node name="name" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -59.0
+offset_top = -23.0
+offset_right = 59.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 12
+text = "Name"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bbglded6t2dl3"]
+
+[ext_resource type="Shader" uid="uid://bdeqe1y6b5ht" path="res://resources/head/head_shader.tres" id="1_baqpk"]
+
+[resource]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("1_baqpk")

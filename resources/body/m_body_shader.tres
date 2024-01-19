@@ -1,0 +1,65 @@
+[gd_resource type="VisualShader" load_steps=6 format=3 uid="uid://bkaqj4sa6rraq"]
+
+[sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_x5xwf"]
+constant = 1.0
+
+[sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_bm2wv"]
+
+[sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_e3h74"]
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_d6ore"]
+source = 5
+texture_type = 1
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_sau7l"]
+parameter_name = "male_body"
+qualifier = 1
+texture_type = 1
+
+[resource]
+resource_local_to_scene = true
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
+
+global uniform sampler2D male_body : source_color;
+
+
+
+void fragment() {
+	vec4 n_out5p0;
+// Texture2D:5
+	n_out5p0 = texture(male_body, UV);
+
+
+// FloatConstant:3
+	float n_out3p0 = 0.000000;
+
+
+// FloatConstant:2
+	float n_out2p0 = 1.000000;
+
+
+// FloatConstant:4
+	float n_out4p0 = 0.000000;
+
+
+// Output:0
+	ALBEDO = vec3(n_out5p0.xyz);
+	METALLIC = n_out3p0;
+	ROUGHNESS = n_out2p0;
+	SPECULAR = n_out4p0;
+
+
+}
+"
+nodes/fragment/2/node = SubResource("VisualShaderNodeFloatConstant_x5xwf")
+nodes/fragment/2/position = Vector2(40, 360)
+nodes/fragment/3/node = SubResource("VisualShaderNodeFloatConstant_bm2wv")
+nodes/fragment/3/position = Vector2(40, 280)
+nodes/fragment/4/node = SubResource("VisualShaderNodeFloatConstant_e3h74")
+nodes/fragment/4/position = Vector2(40, 440)
+nodes/fragment/5/node = SubResource("VisualShaderNodeTexture_d6ore")
+nodes/fragment/5/position = Vector2(-20, 120)
+nodes/fragment/6/node = SubResource("VisualShaderNodeTexture2DParameter_sau7l")
+nodes/fragment/6/position = Vector2(-540, -40)
+nodes/fragment/connections = PackedInt32Array(2, 0, 0, 3, 3, 0, 0, 2, 4, 0, 0, 4, 6, 0, 5, 2, 5, 0, 0, 0)

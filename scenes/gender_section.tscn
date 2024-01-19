@@ -1,0 +1,361 @@
+[gd_scene load_steps=9 format=3 uid="uid://chaspqc3kbg7x"]
+
+[ext_resource type="Script" path="res://scripts/gradients_handling.gd" id="1_7sdrr"]
+
+[sub_resource type="GDScript" id="GDScript_d03m5"]
+resource_name = "skin_preset"
+script/source = "extends OptionButton
+
+var presets = {
+	\"white\" = 0,
+	\"latin\" = 1,
+	\"black\" = 2,
+	\"albino\" = 3
+}
+
+func _ready():
+	connect(\"item_selected\", item_selected)
+	for gradient in presets:
+		var nam = gradient
+		add_item(nam.capitalize())
+
+func _process(_delta):
+	selected = presets[Global.s_skin_preset]
+
+func item_selected(index):
+	Global.s_skin_preset = get_item_text(index).to_lower()
+"
+
+[sub_resource type="GDScript" id="GDScript_i3q13"]
+resource_name = "hair_preset"
+script/source = "extends OptionButton
+
+var presets = {
+	\"dark\" = 0,
+	\"blonde\" = 1,
+	\"ginger\" = 2,
+	\"gray\" = 3
+}
+
+func _ready():
+	connect(\"item_selected\", item_selected)
+	for gradient in presets:
+		var nam = gradient
+		add_item(nam.capitalize())
+
+func _process(_delta):
+	selected = presets[Global.s_hair_preset]
+
+func item_selected(index):
+	Global.s_hair_preset = get_item_text(index).to_lower()
+"
+
+[sub_resource type="Gradient" id="Gradient_p5umk"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_weui4"]
+gradient = SubResource("Gradient_p5umk")
+
+[sub_resource type="Gradient" id="Gradient_51l2u"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_bwesv"]
+gradient = SubResource("Gradient_51l2u")
+
+[sub_resource type="GDScript" id="GDScript_el275"]
+resource_name = "part_selection"
+script/source = "extends TabContainer
+
+var tabs = {
+	\"head\" = 0,
+	\"body\" = 1
+}
+
+func _process(_delta):
+	current_tab = tabs[Global.s_part]
+
+func _on_tab_selected(tab):
+	Global.s_part = get_child(tab).name.to_lower()
+"
+
+[node name="gender" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7sdrr")
+
+[node name="male_head_assets" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="title_assets" type="Panel" parent="male_head_assets"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="text" type="Label" parent="male_head_assets/title_assets"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Assets"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="background" type="Panel" parent="male_head_assets/title_assets/text"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="settings" type="HBoxContainer" parent="male_head_assets"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="head_model" type="VBoxContainer" parent="male_head_assets/settings"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="label" type="Panel" parent="male_head_assets/settings/head_model"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="text" type="Label" parent="male_head_assets/settings/head_model/label"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Head Model"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="background" type="Panel" parent="male_head_assets/settings/head_model"]
+show_behind_parent = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="option" type="OptionButton" parent="male_head_assets/settings/head_model/background"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+alignment = 1
+
+[node name="skin_preset" type="VBoxContainer" parent="male_head_assets/settings"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="label" type="Panel" parent="male_head_assets/settings/skin_preset"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="text" type="Label" parent="male_head_assets/settings/skin_preset/label"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Skin Color"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="background" type="Panel" parent="male_head_assets/settings/skin_preset"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="skin_color" type="OptionButton" parent="male_head_assets/settings/skin_preset/background"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+focus_mode = 0
+alignment = 1
+script = SubResource("GDScript_d03m5")
+
+[node name="hair_preset" type="VBoxContainer" parent="male_head_assets/settings"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="label" type="Panel" parent="male_head_assets/settings/hair_preset"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="text" type="Label" parent="male_head_assets/settings/hair_preset/label"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Hair Color
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="background" type="Panel" parent="male_head_assets/settings/hair_preset"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="hair_color" type="OptionButton" parent="male_head_assets/settings/hair_preset/background"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+focus_mode = 0
+alignment = 1
+script = SubResource("GDScript_i3q13")
+
+[node name="common_gradients" type="VBoxContainer" parent="male_head_assets"]
+layout_mode = 2
+
+[node name="gradient_base" type="Panel" parent="male_head_assets/common_gradients"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+
+[node name="texture" type="TextureRect" parent="male_head_assets/common_gradients/gradient_base"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_weui4")
+expand_mode = 1
+
+[node name="gradient_hair" type="Panel" parent="male_head_assets/common_gradients"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+
+[node name="texture" type="TextureRect" parent="male_head_assets/common_gradients/gradient_hair"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_bwesv")
+expand_mode = 1
+
+[node name="part_section" type="TabContainer" parent="male_head_assets"]
+layout_mode = 2
+size_flags_vertical = 3
+script = SubResource("GDScript_el275")
+
+[node name="Head" type="Control" parent="male_head_assets/part_section"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="scroll_box" type="ScrollContainer" parent="male_head_assets/part_section/Head"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="background" type="HBoxContainer" parent="male_head_assets/part_section/Head/scroll_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="assets" type="VBoxContainer" parent="male_head_assets/part_section/Head/scroll_box/background"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="separator" type="Control" parent="male_head_assets/part_section/Head/scroll_box/background"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[node name="Body" type="Control" parent="male_head_assets/part_section"]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+
+[node name="scroll_box" type="ScrollContainer" parent="male_head_assets/part_section/Body"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="background" type="HBoxContainer" parent="male_head_assets/part_section/Body/scroll_box"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="assets" type="VBoxContainer" parent="male_head_assets/part_section/Body/scroll_box/background"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="separator" type="Control" parent="male_head_assets/part_section/Body/scroll_box/background"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[connection signal="tab_selected" from="male_head_assets/part_section" to="male_head_assets/part_section" method="_on_tab_selected"]

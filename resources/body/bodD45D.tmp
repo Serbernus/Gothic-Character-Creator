@@ -1,0 +1,19 @@
+[gd_scene load_steps=6 format=3 uid="uid://c0ibc744r6ekr"]
+
+[ext_resource type="PackedScene" uid="uid://bghr40o5pq1t4" path="res://Resources/body/body.glb" id="1_fpeir"]
+[ext_resource type="Texture2D" uid="uid://c8j1b4fyuka4j" path="res://Resources/body/textures/Hum_Body_Naked_V1_C0.tga" id="2_1bw3j"]
+[ext_resource type="Script" path="res://Resources/body/body.gd" id="2_y7wo8"]
+[ext_resource type="ArrayMesh" uid="uid://ctl0baqtbhe06" path="res://Resources/head/models/head_bald.obj" id="3_ed1bs"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8tfv3"]
+albedo_texture = ExtResource("2_1bw3j")
+metallic_specular = 0.0
+
+[node name="body" instance=ExtResource("1_fpeir")]
+script = ExtResource("2_y7wo8")
+
+[node name="body_mesh" parent="skeleton/Skeleton3D" index="0"]
+material_override = SubResource("StandardMaterial3D_8tfv3")
+
+[node name="head_mesh" type="MeshInstance3D" parent="skeleton/Skeleton3D" index="1"]
+mesh = ExtResource("3_ed1bs")

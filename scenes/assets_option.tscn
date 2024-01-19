@@ -1,0 +1,355 @@
+[gd_scene load_steps=11 format=3 uid="uid://drmmaismckax"]
+
+[ext_resource type="Script" path="res://scripts/assets_option.gd" id="1_g6iie"]
+
+[sub_resource type="GDScript" id="GDScript_uu7wb"]
+resource_name = "extend"
+script/source = "extends Button
+
+@onready var type = name.split(\"_\")[1]
+@onready var popup: VBoxContainer = get_node(\"..\").get_node(\"..\").get_node(\"popup_\" + type)
+@onready var assets_button: Button = get_node(\"..\").get_node(\"button_assets\")
+@onready var gradients_button: Button = get_node(\"..\").get_node(\"button_gradients\")
+
+var showing = false
+var scrolling = false
+var factor = 0.0
+
+func _pressed():
+	if not showing:
+		showing = true
+		scrolling = true
+		if type == \"assets\":
+			gradients_button.showing = false
+		elif type == \"gradients\":
+			assets_button.showing = false
+	else:
+		showing = false
+
+func _process(delta):
+	if showing:
+		factor = lerp(factor, 1.0, delta * 64)
+	else:
+		factor = lerp(factor, 0.0, delta * 64)
+	if name == \"button_assets\":
+		popup.custom_minimum_size.y = 300 * factor
+		popup.modulate = Color.WHITE * factor
+	elif name == \"button_gradients\":
+		popup.custom_minimum_size.y = 174 * factor
+		popup.modulate = Color.WHITE * factor
+	if scrolling:
+		var container = get_parent().get_parent()
+		var scroll_box: ScrollContainer = find_parent(\"scroll_box\")
+		var max_y = container.global_position.y + container.size.y
+		if max_y > scroll_box.global_position.y + scroll_box.size.y:
+			scroll_box.scroll_vertical += delta * 8192
+		elif factor > 0.99:
+			scrolling = false
+"
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_bmkxa"]
+parameter_name = "image"
+texture_type = 1
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_p1rtg"]
+source = 5
+texture_type = 1
+
+[sub_resource type="VisualShaderNodeColorFunc" id="VisualShaderNodeColorFunc_rdt8d"]
+
+[sub_resource type="VisualShaderNodeVectorDecompose" id="VisualShaderNodeVectorDecompose_kpcch"]
+default_input_values = [0, Quaternion(0, 0, 0, 0)]
+op_type = 2
+
+[sub_resource type="VisualShader" id="VisualShader_7361j"]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+uniform sampler2D image : source_color;
+
+
+
+void fragment() {
+	vec4 n_out3p0;
+// Texture2D:3
+	n_out3p0 = texture(image, UV);
+
+
+	vec3 n_out4p0;
+// ColorFunc:4
+	{
+		vec3 c = vec3(n_out3p0.xyz);
+		float max1 = max(c.r, c.g);
+		float max2 = max(max1, c.b);
+		n_out4p0 = vec3(max2, max2, max2);
+	}
+
+
+// VectorDecompose:7
+	float n_out7p0 = n_out3p0.x;
+	float n_out7p1 = n_out3p0.y;
+	float n_out7p2 = n_out3p0.z;
+	float n_out7p3 = n_out3p0.w;
+
+
+// Output:0
+	COLOR.rgb = n_out4p0;
+	COLOR.a = n_out7p3;
+
+
+}
+"
+graph_offset = Vector2(-751.779, 86.305)
+mode = 1
+flags/light_only = false
+nodes/fragment/2/node = SubResource("VisualShaderNodeTexture2DParameter_bmkxa")
+nodes/fragment/2/position = Vector2(-460, 340)
+nodes/fragment/3/node = SubResource("VisualShaderNodeTexture_p1rtg")
+nodes/fragment/3/position = Vector2(-380, 200)
+nodes/fragment/4/node = SubResource("VisualShaderNodeColorFunc_rdt8d")
+nodes/fragment/4/position = Vector2(-100, 240)
+nodes/fragment/7/node = SubResource("VisualShaderNodeVectorDecompose_kpcch")
+nodes/fragment/7/position = Vector2(-80, 320)
+nodes/fragment/connections = PackedInt32Array(2, 0, 3, 2, 4, 0, 0, 0, 7, 3, 0, 1, 3, 0, 4, 0, 3, 0, 7, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2kobf"]
+resource_local_to_scene = true
+shader = SubResource("VisualShader_7361j")
+
+[sub_resource type="Gradient" id="Gradient_nvnnx"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_pxmw1"]
+gradient = SubResource("Gradient_nvnnx")
+width = 1024
+
+[node name="asset_option" type="VBoxContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+script = ExtResource("1_g6iie")
+
+[node name="name" type="Label" parent="."]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "asset
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="background" type="Panel" parent="name"]
+show_behind_parent = true
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="container" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="text_box" type="Panel" parent="container"]
+custom_minimum_size = Vector2(192, 0)
+layout_mode = 2
+
+[node name="name" type="Label" parent="container/text_box"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 0.5
+text = "name"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="button_assets" type="Button" parent="container"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+script = SubResource("GDScript_uu7wb")
+
+[node name="container" type="HBoxContainer" parent="container/button_assets"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="aspect" type="AspectRatioContainer" parent="container/button_assets/container"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+ratio = 2.0
+
+[node name="display" type="Panel" parent="container/button_assets/container/aspect"]
+material = SubResource("ShaderMaterial_2kobf")
+layout_mode = 2
+mouse_filter = 2
+
+[node name="button_gradients" type="Button" parent="container"]
+custom_minimum_size = Vector2(192, 0)
+layout_mode = 2
+focus_mode = 0
+script = SubResource("GDScript_uu7wb")
+
+[node name="text" type="Label" parent="container/button_gradients"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Gradients"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="popup_gradients" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 250)
+layout_mode = 2
+
+[node name="background" type="Panel" parent="popup_gradients"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="container" type="VBoxContainer" parent="popup_gradients/background"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="green" type="HBoxContainer" parent="popup_gradients/background/container"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="text_box" type="Panel" parent="popup_gradients/background/container/green"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+
+[node name="text" type="Label" parent="popup_gradients/background/container/green/text_box"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+text = "G"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="gradient" type="Panel" parent="popup_gradients/background/container/green"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+
+[node name="texture" type="TextureRect" parent="popup_gradients/background/container/green/gradient"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_pxmw1")
+expand_mode = 1
+
+[node name="blue" type="HBoxContainer" parent="popup_gradients/background/container"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="text_box" type="Panel" parent="popup_gradients/background/container/blue"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+
+[node name="text" type="Label" parent="popup_gradients/background/container/blue/text_box"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+text = "B"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="gradient" type="Panel" parent="popup_gradients/background/container/blue"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+
+[node name="texture" type="TextureRect" parent="popup_gradients/background/container/blue/gradient"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_pxmw1")
+expand_mode = 1
+
+[node name="popup_assets" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+
+[node name="background" type="Panel" parent="popup_assets"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="scroll" type="ScrollContainer" parent="popup_assets/background"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="container" type="HBoxContainer" parent="popup_assets/background/scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="grid" type="GridContainer" parent="popup_assets/background/scroll/container"]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 2
+
+[node name="separator" type="Control" parent="popup_assets/background/scroll/container"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2

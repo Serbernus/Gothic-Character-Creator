@@ -1,0 +1,6 @@
+res://scenes/main.tscn
+res://scripts/character_body.gd
+res://resources/UI_Theme.tres
+res://resources/UI_Custom_Background.tres
+res://resources/body/f_body_shader.tres
+res://resources/body/m_body_shader.tres

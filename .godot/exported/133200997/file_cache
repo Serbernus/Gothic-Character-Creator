@@ -1,0 +1,14 @@
+res://resources/body/body_shader.tres::a7f54df63adab7dc7bcadf8b91ca328b::1703053384::res://.godot/exported/133200997/export-96338dfc97300978d3ba5ef36dfe3a63-body_shader.res
+res://resources/head/gradients/base.tres::3c7377ae5267f26e23368cc44c42ba01::1703053384::res://.godot/exported/133200997/export-6b3d365d54d38abe22155df8e5c32f6b-base.res
+res://resources/head/gradients/eyes.tres::1f783b289aee10c0fedf0c8150f347a7::1703053384::res://.godot/exported/133200997/export-198d26ea5ebb03919529138d871bb615-eyes.res
+res://resources/head/gradients/eyes_whites.tres::087ccb42f2cdd5191bd1724381fe99a1::1703053384::res://.godot/exported/133200997/export-47c1023cf6805a6eb74a6222da17721b-eyes_whites.res
+res://resources/head/gradients/hair.tres::59dc64fb7be50d5842d4c9fdd9ebf023::1702707159::res://.godot/exported/133200997/export-3ea0cd8fbd0cdca50beed39be11c5671-hair.res
+res://resources/head/gradients/mouth.tres::df4a295a7a155699dd3633bebaa5b46d::1703053384::res://.godot/exported/133200997/export-e3fc4775277f488c1884b6441f0fe4ac-mouth.res
+res://resources/head/head_material.tres::fe8b53d1a6b2ff7a91f3aaf56d45c39e::1703053384::res://.godot/exported/133200997/export-e31ce4292444391085dafc6a18e1fa49-head_material.res
+res://resources/head/head_shader.tres::b5c8b0bf5b41de3b499e44b6b681699d::1703053384::res://.godot/exported/133200997/export-db00afc04d692c16420896253045dc59-head_shader.res
+res://resources/head/output_texture.tres::27a0ed1206078dfab7d66fdd4e712cb2::1703053384::res://.godot/exported/133200997/export-5de8838b211360026926fc932f20aa72-output_texture.res
+res://resources/UI_Theme.tres::6998d057e56f8f1332550a899d7dc7ba::1703053384::res://.godot/exported/133200997/export-9bde75664b94727c89822f46610a5145-UI_Theme.res
+res://scenes/assets_option.tscn::126410ba143d629c397c860ac0aae0ef::1703065029::res://.godot/exported/133200997/export-a7f8b2394d3e2e722414039f699d7d79-assets_option.scn
+res://scenes/assets_option_content.tscn::602e84c5b4492f701f924d84dedc139a::1703065029::res://.godot/exported/133200997/export-5247e5aca00febb92880c47a4c0e9e1c-assets_option_content.scn
+res://scenes/gradient_selector.tscn::556464a933767fe42955633b8d55c59d::1702981000::res://.godot/exported/133200997/export-dc15e19b81e76b60eba3e3648e9a2ba6-gradient_selector.scn
+res://scenes/main.tscn::02cdf1f58bd02ee489f3631cfd18fb97::1703065029::res://.godot/exported/133200997/export-3ad5c15c4f3250da0cc7c1af1770d85f-main.scn

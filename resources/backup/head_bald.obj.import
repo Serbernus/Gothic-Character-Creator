@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bw5rjppi7cfan"
+path="res://godot/imported/head_bald.obj-40684b8e0c62c347225bfc202f3b0486.mesh"
+
+[deps]
+
+files=["res://godot/imported/head_bald.obj-40684b8e0c62c347225bfc202f3b0486.mesh"]
+
+source_file="res://resources/backup/head_bald.obj"
+dest_files=["res://godot/imported/head_bald.obj-40684b8e0c62c347225bfc202f3b0486.mesh", "res://godot/imported/head_bald.obj-40684b8e0c62c347225bfc202f3b0486.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false
